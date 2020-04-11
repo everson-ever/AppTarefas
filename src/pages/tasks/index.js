@@ -1,6 +1,6 @@
 import React from 'react';
 import ListTask from '../../components/listTask';
-import { Container, Content, Footer, FooterTab, Button } from 'native-base';
+import { Container, Content } from 'native-base';
 import TasksService from '../../services/tasksServices';
 
 export default class Task extends React.Component {
@@ -9,10 +9,18 @@ export default class Task extends React.Component {
   };
 
   componentDidMount() {
+    this.getTasks();
+
+    this.props.navigation.addListener('focus', () => {
+      this.getTasks();
+    });
+  }
+
+  getTasks = () => {
     TasksService.getTasks().then(tasks => {
       this.setState({ tasks });
     });
-  }
+  };
 
   render() {
     return (
